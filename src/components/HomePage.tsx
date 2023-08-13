@@ -41,7 +41,7 @@ function NewLink() {
 
   const [input, setInput] = useState<string>("");
   const [clickedEffect, setClickedEffect] = useState(false);
-  const [id, setId] = useState<string | undefined>("undefined");
+  const [id, setId] = useState<string | undefined>(undefined);
   const [publishing, setPublishing] = useState<boolean>(false);
   const { onCopy: copyUrl } = useClipboard(
     `${process.env.NEXT_PUBLIC_SITE_URL}${id}`
