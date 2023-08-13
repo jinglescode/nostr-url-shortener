@@ -62,22 +62,33 @@ function NewLink({ fireConfetti }: { fireConfetti: () => void }) {
 
     setPublishing(true);
 
+    // clean up inputs
+
+    let url = input.trim();
+
+    if (!/^https?:\/\//i.test(url)) {
+      url = "https://" + url;
+    }
+
+    // create event
+
     const id = nanoid(8);
 
     const event = new NDKEvent();
     event.kind = 1994;
     event.tags = [
       ["d", id],
-      ["r", input],
+      ["r", url],
     ];
 
     const res = await signPublishEvent(event);
 
     if (res) {
       setId(id);
-      setPublishing(false);
       fireConfetti();
     }
+
+    setPublishing(false);
   }
 
   useEffect(() => {
