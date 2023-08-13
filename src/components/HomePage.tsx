@@ -6,21 +6,30 @@ import {
   SignalIcon,
 } from "@heroicons/react/20/solid";
 import { useNDK } from "@nostr-dev-kit/ndk-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { NDKEvent } from "@nostr-dev-kit/ndk";
 import { nanoid } from "nanoid";
 import { useClipboard } from "@/hooks/useCopyClipboard";
 import Layout from "./Layout";
 
+import ReactCanvasConfetti from "react-canvas-confetti";
+
 export default function HomePage() {
+  const [triggerConfetti, setTriggerConfetti] = useState<number>(0);
+
+  function fireConfetti() {
+    setTriggerConfetti(triggerConfetti + 1);
+  }
+
   return (
     <Layout>
-      <Main />
+      <Main fireConfetti={fireConfetti} />
+      <Confetti triggerConfetti={triggerConfetti} />
     </Layout>
   );
 }
 
-function Main() {
+function Main({ fireConfetti }: { fireConfetti: () => void }) {
   return (
     <div className="flex flex-col justify-center items-center mx-auto max-w-2xl w-full gap-2">
       <AtSymbolIcon className="h-24 w-24 text-white" />
@@ -30,13 +39,13 @@ function Main() {
       </h2> */}
 
       <div className="w-full rounded-xl bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl">
-        <NewLink />
+        <NewLink fireConfetti={fireConfetti} />
       </div>
     </div>
   );
 }
 
-function NewLink() {
+function NewLink({ fireConfetti }: { fireConfetti: () => void }) {
   const { signer, signPublishEvent } = useNDK();
 
   const [input, setInput] = useState<string>("");
@@ -49,7 +58,7 @@ function NewLink() {
   const inputRef = useRef();
 
   async function shortenUrl() {
-    if (!signer || publishing) return;
+    if (!signer || publishing || input.length === 0) return;
 
     setPublishing(true);
 
@@ -67,6 +76,7 @@ function NewLink() {
     if (res) {
       setId(id);
       setPublishing(false);
+      fireConfetti();
     }
   }
 
@@ -140,5 +150,72 @@ function NewLink() {
         </div>
       )}
     </div>
+  );
+}
+
+function Confetti({ triggerConfetti }: { triggerConfetti: number }) {
+  const refAnimationInstance = useRef(null);
+
+  const getInstance = useCallback((instance) => {
+    refAnimationInstance.current = instance;
+  }, []);
+
+  const makeShot = useCallback((particleRatio, opts) => {
+    refAnimationInstance.current &&
+      // @ts-ignore
+      refAnimationInstance.current({
+        ...opts,
+        origin: { y: 0.7 },
+        particleCount: Math.floor(200 * particleRatio),
+      });
+  }, []);
+
+  const fire = useCallback(() => {
+    makeShot(0.25, {
+      spread: 26,
+      startVelocity: 55,
+    });
+
+    makeShot(0.2, {
+      spread: 60,
+    });
+
+    makeShot(0.35, {
+      spread: 100,
+      decay: 0.91,
+      scalar: 0.8,
+    });
+
+    makeShot(0.1, {
+      spread: 120,
+      startVelocity: 25,
+      decay: 0.92,
+      scalar: 1.2,
+    });
+
+    makeShot(0.1, {
+      spread: 120,
+      startVelocity: 45,
+    });
+  }, [makeShot]);
+
+  useEffect(() => {
+    if (triggerConfetti != 0) {
+      fire();
+    }
+  }, [triggerConfetti]);
+
+  return (
+    <ReactCanvasConfetti
+      refConfetti={getInstance}
+      style={{
+        position: "fixed",
+        pointerEvents: "none",
+        width: "100%",
+        height: "100%",
+        top: 0,
+        left: 0,
+      }}
+    />
   );
 }

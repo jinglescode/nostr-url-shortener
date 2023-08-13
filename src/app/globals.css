@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-color: black;
+}
+
 .font-outline {
   -webkit-text-stroke: 1px gray;
 }
