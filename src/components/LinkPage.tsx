@@ -45,15 +45,15 @@ export default function LinkPage() {
         <div className="flex-1 flex flex-col justify-center items-center mx-auto max-w-2xl w-full gap-2">
           <AtSymbolIcon className="h-24 w-24 text-white" />
 
-          <h2 className="text-3xl font-mono font-bold tracking-tight text-white sm:text-4xl font-outline">
-            NOSTR URL Shortener
-          </h2>
+          {/* <h2 className="text-3xl font-mono font-bold tracking-tight text-white sm:text-4xl font-outline">
+            URL Shortener
+          </h2> */}
 
           <div className="w-full rounded-xl bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl">
             <div className="h-20 w-full bg-transparent pl-4 pr-4 text-gray-900 items-center flex flex-col justify-center">
               <span>This URL does not exist.</span>
-              <Link href={`/`}>
-                Create one<span> &rarr;</span>
+              <Link href={`/`} className="text-gray-700">
+                Shorten another URL<span> &rarr;</span>
               </Link>
             </div>
           </div>

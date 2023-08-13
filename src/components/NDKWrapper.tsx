@@ -10,7 +10,7 @@ export default function NDKWrapper({
 }) {
   return (
     <NDKProvider
-      relayUrls={["wss://relay.damus.io", "wss://relay.snort.social"]}
+      relayUrls={["wss://relay.damus.io", "wss://relay.nostr.band"]}
     >
       {loginSiger && <LoadNdk />}
       {children}
