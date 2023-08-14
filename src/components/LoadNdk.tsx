@@ -10,6 +10,6 @@ export default function LoadNdk() {
       }
     }
     login();
-  }, [ndk]);
+  }, [loginWithSecret, ndk, signer]);
   return <></>;
 }
