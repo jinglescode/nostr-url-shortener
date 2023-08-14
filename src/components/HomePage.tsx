@@ -14,7 +14,7 @@ import Layout from "./Layout";
 
 import ReactCanvasConfetti from "react-canvas-confetti";
 
-export default function HomePage({ siteURL }: { siteURL: string }) {
+export default function HomePage() {
   const [triggerConfetti, setTriggerConfetti] = useState<number>(0);
 
   function fireConfetti() {
@@ -23,19 +23,13 @@ export default function HomePage({ siteURL }: { siteURL: string }) {
 
   return (
     <Layout>
-      <Main fireConfetti={fireConfetti} siteURL={siteURL} />
+      <Main fireConfetti={fireConfetti} />
       <Confetti triggerConfetti={triggerConfetti} />
     </Layout>
   );
 }
 
-export async function getServerSideProps(context: any) {
-  const hostName = context.req.headers["x-forwarded-host"] || context.req.headers.host;
-  const siteURL = `https://${hostName}/`;
-  return { props: { siteURL } };
-}
-
-function Main({ fireConfetti, siteURL }: { fireConfetti: () => void; siteURL: string }) {
+function Main({ fireConfetti }: { fireConfetti: () => void }) {
   return (
     <div className="flex flex-col justify-center items-center mx-auto max-w-2xl w-full gap-2">
       <AtSymbolIcon className="h-24 w-24 text-white" />
@@ -45,21 +39,22 @@ function Main({ fireConfetti, siteURL }: { fireConfetti: () => void; siteURL: st
       </h2> */}
 
       <div className="w-full rounded-xl bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl">
-        <NewLink fireConfetti={fireConfetti} siteURL={siteURL} />
+        <NewLink fireConfetti={fireConfetti} />
       </div>
     </div>
   );
 }
 
-function NewLink({ fireConfetti, siteURL }: { fireConfetti: () => void; siteURL: string }) {
-
+function NewLink({ fireConfetti }: { fireConfetti: () => void }) {
   const { signer, signPublishEvent } = useNDK();
 
   const [input, setInput] = useState<string>("");
   const [clickedEffect, setClickedEffect] = useState(false);
   const [id, setId] = useState<string | undefined>(undefined);
   const [publishing, setPublishing] = useState<boolean>(false);
-  const { onCopy: copyUrl } = useClipboard(`${siteURL}${id}`);
+  const { onCopy: copyUrl } = useClipboard(
+    `${process.env.NEXT_PUBLIC_SITE_URL}${id}`
+  );
   const inputRef = useRef();
 
   async function shortenUrl() {
@@ -117,7 +112,8 @@ function NewLink({ fireConfetti, siteURL }: { fireConfetti: () => void; siteURL:
 
       {id ? (
         <div className="h-12 w-full bg-transparent pl-11 pr-4 text-gray-900 items-center flex">
-          {siteURL}{id}
+          {process.env.NEXT_PUBLIC_SITE_URL}
+          {id}
         </div>
       ) : (
         <input
@@ -218,7 +214,7 @@ function Confetti({ triggerConfetti }: { triggerConfetti: number }) {
     if (triggerConfetti != 0) {
       fire();
     }
-  }, [fire, triggerConfetti]);
+  }, [triggerConfetti]);
 
   return (
     <ReactCanvasConfetti
