@@ -214,7 +214,7 @@ function Confetti({ triggerConfetti }: { triggerConfetti: number }) {
     if (triggerConfetti != 0) {
       fire();
     }
-  }, [triggerConfetti]);
+  }, [fire, triggerConfetti]);
 
   return (
     <ReactCanvasConfetti
