@@ -24,7 +24,7 @@ export default function LinkPage() {
       const event = await ndk.fetchEvent(filter);
 
       if (event) {
-        const rTags = event.tags.filter((t) => t[0] === "r");
+        const rTags = event.tags.filter((t: string[]) => t[0] === "r");
         try {
           push(rTags[0][1]);
         } catch (e) {
@@ -35,7 +35,7 @@ export default function LinkPage() {
       }
     }
     fetchData();
-  }, [ndk]);
+  }, [ndk, params.slug, push]);
 
   if (!notFound) return <></>;
 
