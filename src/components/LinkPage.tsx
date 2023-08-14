@@ -43,7 +43,7 @@ export default function LinkPage() {
     return (
       <Layout>
         <div className="flex-1 flex flex-col justify-center items-center mx-auto max-w-2xl w-full gap-2">
-          <AtSymbolIcon className="h-24 w-24 text-white" />
+          {/* <AtSymbolIcon className="h-24 w-24 text-white" /> */}
 
           {/* <h2 className="text-3xl font-mono font-bold tracking-tight text-white sm:text-4xl font-outline">
             URL Shortener
