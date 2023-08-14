@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <div className="bg-white/0 border-t border-white/0 flex items-center justify-end w-full p-4">
-      <div className="flex space-x-6 justify-center">
+      <div className="flex space-x-2 justify-center">
         <button
           title={
             isUserSignIn
