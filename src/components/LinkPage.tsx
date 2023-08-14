@@ -13,7 +13,7 @@ export default function LinkPage() {
   const params = useParams();
   const { push } = useRouter();
   const [notFound, setNotFound] = useState<boolean>(false);
-  const imageFormat = getSupportedImageFormatClientSide();
+  const [imageFormat, setImageFormat] = useState<'avif' | 'webp' | 'jpeg'>('jpeg'); // default to 'jpeg'
 
   useEffect(() => {
     async function fetchData() {
@@ -36,7 +36,14 @@ export default function LinkPage() {
         setNotFound(true);
       }
     }
+
+    async function determineImageFormat() {
+      const format = await getSupportedImageFormatClientSide();
+      setImageFormat(format);
+    }
+
     fetchData();
+    determineImageFormat();
   }, [ndk, params.slug, push]);
 
   if (!notFound) return <></>;
