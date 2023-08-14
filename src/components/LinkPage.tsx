@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 import Layout from "./Layout";
 import { AtSymbolIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
+import { getSupportedImageFormatClientSide } from "@/utils/getSupportedImageFormatClientSide";
 
 export default function LinkPage() {
   const { ndk } = useNDK();
   const params = useParams();
   const { push } = useRouter();
   const [notFound, setNotFound] = useState<boolean>(false);
+  const [imageFormat, setImageFormat] = useState<'avif' | 'webp' | 'jpeg'>('jpeg'); // default to 'jpeg'
 
   useEffect(() => {
     async function fetchData() {
@@ -24,7 +26,7 @@ export default function LinkPage() {
       const event = await ndk.fetchEvent(filter);
 
       if (event) {
-        const rTags = event.tags.filter((t) => t[0] === "r");
+        const rTags = event.tags.filter((t: string[]) => t[0] === "r");
         try {
           push(rTags[0][1]);
         } catch (e) {
@@ -34,14 +36,21 @@ export default function LinkPage() {
         setNotFound(true);
       }
     }
+
+    async function determineImageFormat() {
+      const format = await getSupportedImageFormatClientSide();
+      setImageFormat(format);
+    }
+
     fetchData();
-  }, [ndk]);
+    determineImageFormat();
+  }, [ndk, params.slug, push]);
 
   if (!notFound) return <></>;
 
   if (notFound)
     return (
-      <Layout>
+      <Layout imageFormat={imageFormat}>
         <div className="flex-1 flex flex-col justify-center items-center mx-auto max-w-2xl w-full gap-2">
           {/* <AtSymbolIcon className="h-24 w-24 text-white" /> */}
 

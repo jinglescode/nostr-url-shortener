@@ -3,21 +3,21 @@ import Footer from "./Footer";
 import Header from "./Header";
 import { useEffect, useState } from "react";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children, imageFormat }: { children: React.ReactNode, imageFormat: 'avif' | 'webp' | 'jpeg' }) {
   const [selectedImage, setSelectedImage] = useState<string>("");
 
   useEffect(() => {
     const _selectedImage =
       BACKGROUND_IMAGES[Math.floor(Math.random() * BACKGROUND_IMAGES.length)];
-    setSelectedImage(_selectedImage);
-  }, []);
+    setSelectedImage(_selectedImage + `&fm=${imageFormat}`);
+  }, [imageFormat]);
 
   return (
     <main
       className={`w-full bg-cover bg-center`}
       style={{ backgroundImage: `url(${selectedImage})` }}
     >
-      <div className="w-full h-screen flex flex-col backdrop-blur-sm">
+      <div className="w-full h-screen flex flex-col">
         <div className="h-14">
           <Header />
         </div>
