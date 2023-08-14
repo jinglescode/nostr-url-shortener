@@ -9,9 +9,10 @@ export default function NDKWrapper({
   children: React.ReactNode;
   loginSiger?: boolean;
 }) {
+  const relayUrls = process.env.NEXT_PUBLIC_RELAY_URLS?.split(',') || ["wss://relay.damus.io", "wss://relay.nostr.band"];
   return (
     <NDKProvider
-      relayUrls={["wss://relay.damus.io", "wss://relay.nostr.band"]}
+      relayUrls={relayUrls}
     >
       {loginSiger && <LoadNdk />}
       {children}
