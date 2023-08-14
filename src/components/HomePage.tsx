@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   ArrowPathIcon,
   AtSymbolIcon,
@@ -16,7 +16,13 @@ import Layout from "./Layout";
 
 import ReactCanvasConfetti from "react-canvas-confetti";
 
-export default function HomePage({ siteURL, imageFormat }: { siteURL: string, imageFormat: 'avif' | 'webp' | 'jpeg'}) {
+export default function HomePage({
+  siteURL,
+  imageFormat,
+}: {
+  siteURL: string;
+  imageFormat: "avif" | "webp" | "jpeg";
+}) {
   const [triggerConfetti, setTriggerConfetti] = useState<number>(0);
 
   function fireConfetti() {
@@ -31,7 +37,13 @@ export default function HomePage({ siteURL, imageFormat }: { siteURL: string, im
   );
 }
 
-function Main({ fireConfetti, siteURL }: { fireConfetti: () => void; siteURL: string }) {
+function Main({
+  fireConfetti,
+  siteURL,
+}: {
+  fireConfetti: () => void;
+  siteURL: string;
+}) {
   return (
     <div className="flex flex-col justify-center items-center mx-auto max-w-2xl w-full gap-2">
       {/* <AtSymbolIcon className="h-24 w-24 text-white" /> */}
@@ -47,7 +59,13 @@ function Main({ fireConfetti, siteURL }: { fireConfetti: () => void; siteURL: st
   );
 }
 
-function NewLink({ fireConfetti, siteURL }: { fireConfetti: () => void; siteURL: string }) {
+function NewLink({
+  fireConfetti,
+  siteURL,
+}: {
+  fireConfetti: () => void;
+  siteURL: string;
+}) {
   const { signer, signPublishEvent } = useNDK();
 
   const [input, setInput] = useState<string>("");
@@ -55,9 +73,7 @@ function NewLink({ fireConfetti, siteURL }: { fireConfetti: () => void; siteURL:
   const [clickedEffect, setClickedEffect] = useState(false);
   const [id, setId] = useState<string | undefined>(undefined);
   const [publishing, setPublishing] = useState<boolean>(false);
-  const { onCopy: copyUrl } = useClipboard(
-    `${siteURL}${id}`
-  );
+  const { onCopy: copyUrl } = useClipboard(`${siteURL}${id}`);
   const inputRef = useRef();
 
   async function shortenUrl() {
@@ -84,13 +100,13 @@ function NewLink({ fireConfetti, siteURL }: { fireConfetti: () => void; siteURL:
       ["r", url],
     ];
 
-    const res = await signPublishEvent(event);
-
-    if (res) {
-      setId(id);
-      fireConfetti();
-    }
-
+    try {
+      const res = await signPublishEvent(event);
+      if (res) {
+        setId(id);
+        fireConfetti();
+      }
+    } catch (e) {}
     setPublishing(false);
   }
 
@@ -103,19 +119,20 @@ function NewLink({ fireConfetti, siteURL }: { fireConfetti: () => void; siteURL:
     <div className="relative">
       {signer ? (
         <LinkIcon
-          className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-600"
+          className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-400"
           aria-hidden="true"
         />
       ) : (
         <SignalIcon
-          className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-600"
+          className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-400"
           aria-hidden="true"
         />
       )}
 
       {id ? (
         <div className="h-12 w-full bg-transparent pl-11 pr-4 text-gray-900 items-center flex">
-          {siteURL}{id}
+          {siteURL}
+          {id}
         </div>
       ) : (
         <input
