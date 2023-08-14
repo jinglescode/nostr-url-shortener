@@ -3,10 +3,10 @@
 import NDKWrapper from "@/components/NDKWrapper";
 import HomePage from "@/components/HomePage";
 
-export default function Home() {
+export default function Home(props) {
   return (
     <NDKWrapper loginSiger={true}>
-      <HomePage />
+      <HomePage {...props} />
     </NDKWrapper>
   );
 }
