@@ -15,7 +15,7 @@ import Layout from "./Layout";
 
 import ReactCanvasConfetti from "react-canvas-confetti";
 
-export default function HomePage({ siteURL }: { siteURL: string }) {
+export default function HomePage({ siteURL, imageFormat }: { siteURL: string, imageFormat: 'avif' | 'webp' | 'jpeg'}) {
   const [triggerConfetti, setTriggerConfetti] = useState<number>(0);
 
   function fireConfetti() {
@@ -23,7 +23,7 @@ export default function HomePage({ siteURL }: { siteURL: string }) {
   }
 
   return (
-    <Layout>
+    <Layout imageFormat={imageFormat}>
       <Main fireConfetti={fireConfetti} siteURL={siteURL} />
       <Confetti triggerConfetti={triggerConfetti} />
     </Layout>
