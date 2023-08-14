@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 import Layout from "./Layout";
 import { AtSymbolIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
+import { getSupportedImageFormatClientSide } from "@/utils/getSupportedImageFormatClientSide";
 
 export default function LinkPage() {
   const { ndk } = useNDK();
   const params = useParams();
   const { push } = useRouter();
   const [notFound, setNotFound] = useState<boolean>(false);
+  const imageFormat = getSupportedImageFormatClientSide();
 
   useEffect(() => {
     async function fetchData() {
@@ -41,7 +43,7 @@ export default function LinkPage() {
 
   if (notFound)
     return (
-      <Layout>
+      <Layout imageFormat={imageFormat}>
         <div className="flex-1 flex flex-col justify-center items-center mx-auto max-w-2xl w-full gap-2">
           <AtSymbolIcon className="h-24 w-24 text-white" />
 
