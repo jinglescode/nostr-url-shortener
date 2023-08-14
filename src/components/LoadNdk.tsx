@@ -1,3 +1,4 @@
+"use client"
 import { useNDK } from "@nostr-dev-kit/ndk-react";
 import { useEffect } from "react";
 

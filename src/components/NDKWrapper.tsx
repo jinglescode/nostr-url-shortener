@@ -1,3 +1,4 @@
+"use client"
 import { NDKProvider } from "@nostr-dev-kit/ndk-react";
 import LoadNdk from "@/components/LoadNdk";
 
