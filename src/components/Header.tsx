@@ -9,11 +9,13 @@ export default function Header() {
   const { ndk, loginWithNip07 } = useNDK();
 
   async function login() {
-    const user = await loginWithNip07();
-    if (user) {
-      setUserNpub(user.npub);
-      setisUserSignIn(true);
-    }
+    try {
+      const user = await loginWithNip07();
+      if (user) {
+        setUserNpub(user.npub);
+        setisUserSignIn(true);
+      }
+    } catch (e) {}
   }
 
   return (
