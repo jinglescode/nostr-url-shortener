@@ -1,9 +1,9 @@
-name = "cf-redirector"
+name = "cf-redirector-w3do"
 main = "src/index.ts"
 compatibility_date = "2023-08-17"
 workers_dev = false
 usage_model = "bundled"
-route = { pattern = "nl.run/*", zone_name = "nl.run" }
+route = { pattern = "w3.do/*", zone_name = "w3.do" }
 
 kv_namespaces = [
   { binding = "NOSTR_REDIRECT_KV_CACHE", id = "d409ce1394e44ea5a7a02021d13b3301" }
