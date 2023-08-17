@@ -1,0 +1,16 @@
+name = "cf-redirector"
+main = "src/index.ts"
+compatibility_date = "2023-08-17"
+workers_dev = false
+usage_model = "bundled"
+route = { pattern = "nl.run/*", zone_name = "nl.run" }
+
+kv_namespaces = [
+  { binding = "NOSTR_REDIRECT_KV_CACHE", id = "d409ce1394e44ea5a7a02021d13b3301" }
+]
+
+[placement]
+mode = "smart"
+
+[vars]
+NOSTR_RELAYS = "wss://relay.damus.io,wss://relay.nostr.band,wss://nos.lol"
