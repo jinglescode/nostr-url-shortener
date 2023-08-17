@@ -66,13 +66,13 @@ function NewLink({
   fireConfetti: () => void;
   siteURL: string;
 }) {
-  const { signer, signPublishEvent } = useNDK();
+  const { ndk, signer, signPublishEvent } = useNDK();
 
   const [input, setInput] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
-  const [clickedEffect, setClickedEffect] = useState(false);
   const [id, setId] = useState<string | undefined>(undefined);
   const [publishing, setPublishing] = useState<boolean>(false);
+
   const { onCopy: copyUrl } = useClipboard(`${siteURL}${id}`);
   const inputRef = useRef();
 
@@ -106,7 +106,7 @@ function NewLink({
         setId(id);
         fireConfetti();
       }
-    } catch (e) {}
+    } catch (e) { }
     setPublishing(false);
   }
 
@@ -136,9 +136,9 @@ function NewLink({
         </div>
       ) : (
         <input
-          className="h-12 w-full bg-transparent pl-11 pr-4 text-gray-900 outline-none placeholder:text-gray-600"
+          className="h-12 w-full bg-transparent pl-11 pr-4 text-gray-900 outline-none placeholder:text-gray-600 pr-16"
           placeholder={
-            signer ? "enter url you want to shorten" : "Connecting to relays..."
+            signer ? "enter url you want to shorten" : ndk ? 'Connecting to signer... (or sign in with NIP07)' : "Connecting to relays..."
           }
           onChange={(e) => setInput(e.target.value)}
           value={input}
@@ -150,7 +150,7 @@ function NewLink({
       )}
 
       {signer && (
-        <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5 items-center">
+        <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5 items-center z-50">
           {id && (
             <>
               {copied ? (
