@@ -1,0 +1,2 @@
+# Ignore Cloudflare workers for Vercel deployments
+/cf-redirector

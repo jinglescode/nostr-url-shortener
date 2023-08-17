@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
-    "@nostr-dev-kit/ndk": "0.8.1",
+    "@nostr-dev-kit/ndk": "^0.8.1",
     "@nostr-dev-kit/ndk-react": "^0.1.1",
     "@types/node": "20.4.10",
     "@types/react": "18.2.20",
