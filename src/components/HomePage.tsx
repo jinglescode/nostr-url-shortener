@@ -123,7 +123,7 @@ function NewLink({
           {id}
         </div>
       ) : (
-        <div className="flex rounded-md shadow-sm">
+        <div className="flex rounded-md shadow-sm h-12">
           <div className="relative flex flex-grow items-stretch focus-within:z-10">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               {signer ? (
@@ -154,12 +154,15 @@ function NewLink({
               ref={inputRef}
             />
           </div>
-          <button
-            type="button"
-            className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm font-semibold text-gray-600 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 hover:bg-opacity-80"
-          >
-            Enter
-          </button>
+          {!id && !publishing && (
+            <button
+              type="button"
+              className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm font-semibold text-gray-600 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 hover:bg-opacity-80"
+              onClick={shortenUrl}
+            >
+              <kbd className="">Enter</kbd>
+            </button>
+          )}
         </div>
       )}
 
@@ -185,15 +188,6 @@ function NewLink({
             <ArrowPathIcon
               className={`inline-block w-8 h-8 animate-spin text-gray-400`}
             />
-          )}
-
-          {!id && !publishing && (
-            <button
-              onClick={shortenUrl}
-              className="inline-flex items-center rounded border border-gray-400 px-2 font-sans text-xs text-gray-600 h-8"
-            >
-              <kbd className="">enter</kbd>
-            </button>
           )}
         </div>
       )}
