@@ -142,7 +142,7 @@ function NewLink({
               type="url"
               name="url"
               id="url_input"
-              className="block w-full bg-transparent rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              className="block w-full bg-transparent rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 border-transparent focus:border-transparent focus:ring-0"
               placeholder={
                 signer ? "enter url you want to shorten" : ndk ? 'Connecting to signer... (or sign in with NIP07)' : "Connecting to relays..."
               }
@@ -157,8 +157,9 @@ function NewLink({
           {!id && !publishing && (
             <button
               type="button"
-              className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:bg-opacity-80"
+              className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:bg-opacity-80 disabled:text-gray-400"
               onClick={shortenUrl}
+              disabled={!signer || publishing || input.length === 0}
             >
               <kbd className="">Enter</kbd>
             </button>
