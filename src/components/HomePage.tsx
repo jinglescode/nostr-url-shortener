@@ -52,7 +52,7 @@ function Main({
         URL Shortener
       </h2> */}
 
-      <div className="w-full rounded-xl bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl">
+      <div className="w-full rounded-md bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl">
         <NewLink fireConfetti={fireConfetti} siteURL={siteURL} />
       </div>
     </div>
@@ -117,36 +117,53 @@ function NewLink({
 
   return (
     <div className="relative">
-      {signer ? (
-        <LinkIcon
-          className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-400"
-          aria-hidden="true"
-        />
-      ) : (
-        <SignalIcon
-          className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-400"
-          aria-hidden="true"
-        />
-      )}
-
       {id ? (
         <div className="h-12 w-full bg-transparent pl-11 pr-4 text-gray-900 items-center flex">
           {siteURL}
           {id}
         </div>
       ) : (
-        <input
-          className="h-12 w-full bg-transparent pl-11 text-gray-900 outline-none placeholder:text-gray-600 pr-16"
-          placeholder={
-            signer ? "enter url you want to shorten" : ndk ? 'Connecting to signer... (or sign in with NIP07)' : "Connecting to relays..."
-          }
-          onChange={(e) => setInput(e.target.value)}
-          value={input}
-          onKeyUp={(e) => e.key === "Enter" && shortenUrl()}
-          disabled={!signer || publishing}
-          // @ts-ignore
-          ref={inputRef}
-        />
+        <div className="flex rounded-md shadow-sm h-12">
+          <div className="relative flex flex-grow items-stretch focus-within:z-10">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              {signer ? (
+                <LinkIcon
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+              ) : (
+                <SignalIcon
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+              )}
+            </div>
+            <input
+              type="url"
+              name="url"
+              id="url_input"
+              className="block w-full bg-transparent rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              placeholder={
+                signer ? "enter url you want to shorten" : ndk ? 'Connecting to signer... (or sign in with NIP07)' : "Connecting to relays..."
+              }
+              onChange={(e) => setInput(e.target.value)}
+              value={input}
+              onKeyUp={(e) => e.key === "Enter" && shortenUrl()}
+              disabled={!signer || publishing}
+              // @ts-ignore
+              ref={inputRef}
+            />
+          </div>
+          {!id && !publishing && (
+            <button
+              type="button"
+              className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:bg-opacity-80"
+              onClick={shortenUrl}
+            >
+              <kbd className="">Enter</kbd>
+            </button>
+          )}
+        </div>
       )}
 
       {signer && (
@@ -171,15 +188,6 @@ function NewLink({
             <ArrowPathIcon
               className={`inline-block w-8 h-8 animate-spin text-gray-400`}
             />
-          )}
-
-          {!id && !publishing && (
-            <button
-              onClick={shortenUrl}
-              className="inline-flex items-center rounded border border-gray-400 px-2 font-sans text-xs text-gray-600 h-8"
-            >
-              <kbd className="">enter</kbd>
-            </button>
           )}
         </div>
       )}
