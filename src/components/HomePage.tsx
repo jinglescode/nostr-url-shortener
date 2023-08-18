@@ -136,7 +136,7 @@ function NewLink({
         </div>
       ) : (
         <input
-          className="h-12 w-full bg-transparent pl-11 pr-4 text-gray-900 outline-none placeholder:text-gray-600 pr-16"
+          className="h-12 w-full bg-transparent pl-11 text-gray-900 outline-none placeholder:text-gray-600 pr-16"
           placeholder={
             signer ? "enter url you want to shorten" : ndk ? 'Connecting to signer... (or sign in with NIP07)' : "Connecting to relays..."
           }
