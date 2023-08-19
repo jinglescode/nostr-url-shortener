@@ -29,10 +29,6 @@ export default {
 		ctx.passThroughOnException();
 
 		const url = new URL(request.url);
-		// If URL path is /, we pass through the request, as well as all paths that have extensions
-		if (url.pathname === "/" || url.pathname.includes(".")) {
-			return fetch(request);
-		}
 
 		// First we check if CloudFlare cache has the request already, and return it
 		const cache = caches.default;
@@ -40,6 +36,15 @@ export default {
 		const cacheResponse = await cache.match(cacheKey);
 		if (cacheResponse) {
 			return cacheResponse;
+		}
+
+		// If URL path is /, we pass through the request, as well as all paths that have extensions
+		if (url.pathname === "/" ||
+			url.pathname.includes(".") ||
+			url.pathname.startsWith("/_next/") ||
+			url.pathname === "/get"
+		) {
+			return fetch(request);
 		}
 
 		// If not, we check KV cache for the request path, and if found, construct a redirect response
