@@ -14,7 +14,7 @@ export default function Layout({ children, imageFormat }: { children: React.Reac
 
   return (
     <main
-      className={`w-full bg-cover bg-center`}
+      className={`w-full bg-cover bg-center overflow-hidden`}
       style={{ backgroundImage: `url(${selectedImage})` }}
     >
       <div className="w-full h-screen flex flex-col">
