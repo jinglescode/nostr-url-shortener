@@ -29,15 +29,15 @@ You can use this API to create a short URL.
 GET https://w3.do/get?url=<url>
 ```
 
-For example: [https://w3.do/get?url=https://jingles.dev](https://w3.do/get?url=https://jingles.dev)
+For example: [https://w3.do/get?url=https://github.com/jinglescode/nostr-url-shortener](https://w3.do/get?url=https://github.com/jinglescode/nostr-url-shortener)
 
 This will return a JSON response, for example:
 
 ```
 {
-  "id":"bwiIoOyx",
-  "url":"https://w3.do/bwiIoOyx",
-  "eid":"391293af2d7f8b4ac687d68a310d39ee915374ce007115e7902068f4eb0f34ec"
+  "id":"xNQ8b0HZ",
+  "url":"w3.do/xNQ8b0HZ",
+  "eid":"a62729f9e11506183672f1e37bc4617af94636169b3c5b25db6c16b0cd05fbf1"
 }
 ```
 
