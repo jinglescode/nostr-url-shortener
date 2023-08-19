@@ -48,7 +48,11 @@ export async function GET(req: NextRequest) {
   event.id = getEventHash(event);
   event.sig = getSignature(event, sk);
 
-  await pool.publish(relays, event);
+  try {
+    await Promise.all(pool.publish(relays, event));
+  } catch (error) {
+    console.log("Failed to publish to at least one relay in the pool");
+  }
 
   return NextResponse.json({
     id: id,
