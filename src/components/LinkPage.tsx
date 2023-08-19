@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { NDKFilter } from "@nostr-dev-kit/ndk";
 import { useRouter } from "next/navigation";
 import Layout from "./Layout";
-import { AtSymbolIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { getSupportedImageFormatClientSide } from "@/utils/getSupportedImageFormatClientSide";
 
