@@ -8,6 +8,7 @@ import {
   getSignature,
   SimplePool,
 } from "nostr-tools";
+import { DEFAULT_RELAYS } from "@/constants/relays";
 
 export async function GET(req: NextRequest) {
   const url = req.nextUrl.searchParams.get("url");
@@ -16,10 +17,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "no url, /get/?url=<full url here>" });
   }
 
-  const relays = process.env.NEXT_PUBLIC_RELAY_URLS?.split(",") || [
-    "wss://relay.damus.io",
-    "wss://relay.nostr.band",
-  ];
+  const relays =
+    process.env.NEXT_PUBLIC_RELAY_URLS?.split(",") || DEFAULT_RELAYS;
 
   const pool = new SimplePool();
 

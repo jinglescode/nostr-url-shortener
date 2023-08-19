@@ -21,6 +21,26 @@ Why 1994?
 
 Because URLs (Uniform Resource Locators) were defined in 1994 by Tim Berners-Lee, the inventor of the World Wide Web. [[source: Wikipedia](https://en.wikipedia.org/wiki)]
 
+### API
+
+You can use this API to create a short URL.
+
+```
+GET https://w3.do/get?url=<url>
+```
+
+For example: [https://w3.do/get?url=https://jingles.dev](https://w3.do/get?url=https://jingles.dev)
+
+This will return a JSON response, for example:
+
+```
+{
+  "id":"bwiIoOyx",
+  "url":"https://w3.do/bwiIoOyx",
+  "eid":"391293af2d7f8b4ac687d68a310d39ee915374ce007115e7902068f4eb0f34ec"
+}
+```
+
 ### Support this project
 
 - [Fund Raiser](https://geyser.fund/project/url/) - Join the global community to support project on Geyser Fund, a crowdfunding platform. The funds will be used to pay for contributors and bounties.
