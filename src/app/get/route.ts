@@ -48,11 +48,11 @@ export async function GET(req: NextRequest) {
   event.id = getEventHash(event);
   event.sig = getSignature(event, sk);
 
-  pool.publish(relays, event);
+  await pool.publish(relays, event);
 
   return NextResponse.json({
     id: id,
-    url: `https://w3.do/${id}`,
+    url: `${req.headers.get("host")}/${id}`,
     eid: event.id,
   });
 }
