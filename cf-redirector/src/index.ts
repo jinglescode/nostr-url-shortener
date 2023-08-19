@@ -29,10 +29,6 @@ export default {
 		ctx.passThroughOnException();
 
 		const url = new URL(request.url);
-		// If URL path is /, we pass through the request, as well as all paths that have extensions
-		if (url.pathname === "/" || url.pathname.includes(".")) {
-			return fetch(request);
-		}
 
 		// First we check if CloudFlare cache has the request already, and return it
 		const cache = caches.default;
@@ -40,6 +36,15 @@ export default {
 		const cacheResponse = await cache.match(cacheKey);
 		if (cacheResponse) {
 			return cacheResponse;
+		}
+
+		// If URL path is /, we pass through the request, as well as all paths that have extensions
+		if (url.pathname === "/" ||
+			url.pathname.includes(".") ||
+			url.pathname.startsWith("/_next/") ||
+			url.pathname === "/get"
+		) {
+			return fetch(request);
 		}
 
 		// If not, we check KV cache for the request path, and if found, construct a redirect response
@@ -94,6 +99,15 @@ export default {
 				env.NOSTR_REDIRECT_KV_CACHE.put(url.pathname, redirectUrl)
 			);
 		}
+
+		// Get the hostname of the redirect URL
+		const redirectHostname = new URL(redirectUrl).hostname;
+
+		// Check for direct loop or if it's redirecting back to the same hostname
+		if (url.toString() === redirectUrl || url.hostname === redirectHostname) {
+			return new Response("Detected potential redirect loop", { status: 400 });
+		}
+
 		const response_redirect = createRedirectResponse(redirectUrl);
 
 		// Cache the response for 1 day
