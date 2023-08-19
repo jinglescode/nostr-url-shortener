@@ -99,6 +99,15 @@ export default {
 				env.NOSTR_REDIRECT_KV_CACHE.put(url.pathname, redirectUrl)
 			);
 		}
+
+		// Get the hostname of the redirect URL
+		const redirectHostname = new URL(redirectUrl).hostname;
+
+		// Check for direct loop or if it's redirecting back to the same hostname
+		if (url.toString() === redirectUrl || url.hostname === redirectHostname) {
+			return new Response("Detected potential redirect loop", { status: 400 });
+		}
+
 		const response_redirect = createRedirectResponse(redirectUrl);
 
 		// Cache the response for 1 day
