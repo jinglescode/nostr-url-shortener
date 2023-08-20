@@ -1,4 +1,4 @@
-# URL Shortener
+# w3.do - URL Shortener on NOSTR Network
 
 A free URL shortener service enabled by the NOSTR protocol, that is fast and fuss-free, stripped of all bells and whistles, no gimmicks—it just works!
 

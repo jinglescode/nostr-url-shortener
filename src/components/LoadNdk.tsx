@@ -15,7 +15,6 @@ export default function LoadNdk() {
             ? process.env.NEXT_PUBLIC_SK
             : process.env.NEXT_PUBLIC_NSEC || ""
         );
-        console.log(999, user);
       }
     }
     login();
