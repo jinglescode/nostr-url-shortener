@@ -56,42 +56,45 @@ export default function UserLinks({}) {
   if (data === undefined) return <></>;
 
   return (
-    <div className="rounded-md bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl overflow-y-scroll max-h-96 w-full">
-      <table className="min-w-full divide-y divide-gray-300 h-12 table-auto overflow-y-scroll">
-        <tbody>
-          {data
-            .filter((url) => !deletedEvents.includes(url.eid))
-            .map((url, i) => (
-              <tr
-                key={url.id}
-                className={classNames(
-                  i === 0 ? "" : "border-t border-gray-200",
-                  "text-gray-600 text-sm"
-                )}
-              >
-                <td className="flex p-4">
+    <div className="rounded-md bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl max-h-96 w-full">
+      <div className="divide-y divide-gray-300 max-h-96 overflow-y-scroll w-full">
+        {data
+          .filter((url) => !deletedEvents.includes(url.eid))
+          .map((url, i) => (
+            <div
+              key={url.id}
+              className={classNames(
+                i === 0 ? "" : "border-t border-gray-200",
+                "text-gray-600 text-sm flex w-full overflow-x-hidden gap-2 p-4 py-3"
+              )}
+            >
+              <div className="flex-1">
+                <Link
+                  href={`${window.location.href}${url.id}`}
+                  target="_blank"
+                  className="flex hover:underline"
+                >
                   <span className="text-gray-600">{window.location.href}</span>
-                  <Link
-                    href={`${window.location.href}${url.id}`}
-                    target="_blank"
-                  >
-                    <div className="font-medium text-gray-900">{url.id}</div>
-                  </Link>
-                </td>
-                <td className="p-4">
-                  <Link href={`${url.url}`} target="_blank">
-                    <p className="max-w-xs truncate">{url.url}</p>
-                  </Link>
-                </td>
-                <td className="p-4">
-                  <button onClick={() => deleteLink(url.eid)}>
-                    <TrashIcon className="h-5 w-5 text-red-400" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+                  <div className="font-bold text-gray-900">{url.id}</div>
+                </Link>
+              </div>
+              <div className="flex-grow overflow-x-hidden truncate">
+                <Link
+                  href={`${url.url}`}
+                  target="_blank"
+                  className="hover:underline"
+                >
+                  <p className="truncate">{url.url}</p>
+                </Link>
+              </div>
+              <div className="flex-1 flex flex-row-reverse">
+                <button onClick={() => deleteLink(url.eid)}>
+                  <TrashIcon className="h-5 w-5 text-red-400" />
+                </button>
+              </div>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
