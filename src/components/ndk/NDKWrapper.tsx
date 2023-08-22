@@ -3,6 +3,9 @@ import { NDKProvider } from "@nostr-dev-kit/ndk-react";
 import { DEFAULT_RELAYS } from "@/constants/relays";
 import LoadNdk from "./LoadNdk";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
+
 export default function NDKWrapper({
   children,
   loginSiger = false,
@@ -13,9 +16,11 @@ export default function NDKWrapper({
   const relayUrls =
     process.env.NEXT_PUBLIC_RELAY_URLS?.split(",") || DEFAULT_RELAYS;
   return (
-    <NDKProvider relayUrls={relayUrls}>
-      {loginSiger && <LoadNdk />}
-      {children}
-    </NDKProvider>
+    <QueryClientProvider client={queryClient}>
+      <NDKProvider relayUrls={relayUrls}>
+        {loginSiger && <LoadNdk />}
+        {children}
+      </NDKProvider>
+    </QueryClientProvider>
   );
 }

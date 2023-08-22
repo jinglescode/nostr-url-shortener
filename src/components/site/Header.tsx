@@ -2,12 +2,15 @@ import { headerLinks } from "@/constants/headerLinks";
 import { UserIcon } from "@heroicons/react/20/solid";
 import { useNDK } from "@nostr-dev-kit/ndk-react";
 import { useEffect, useState } from "react";
+import { sessionStore } from "./sessionStore";
 
 export default function Header() {
   const [hasExtension, setHasExtension] = useState<boolean>(false);
   const [userNpub, setUserNpub] = useState<string>("");
-  const [isUserSignIn, setisUserSignIn] = useState<boolean>(false);
   const { ndk, loginWithNip07 } = useNDK();
+
+  const isUserSignIn = sessionStore((state) => state.isUserSignIn);
+  const setisUserSignIn = sessionStore((state) => state.setisUserSignIn);
 
   async function login() {
     try {
