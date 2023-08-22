@@ -54,9 +54,9 @@ export default function LinkPage() {
       <Layout imageFormat={imageFormat}>
         <div className="flex-1 flex flex-col justify-center items-center mx-auto max-w-2xl w-full gap-2">
           <div className="w-full rounded-xl bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl">
-            <div className="h-20 w-full bg-transparent pl-4 pr-4 text-gray-900 items-center flex flex-col justify-center">
+            <div className="h-20 w-full bg-transparent pl-4 pr-4 text-gray-dark items-center flex flex-col justify-center">
               <span>This URL does not exist.</span>
-              <Link href={`/`} className="text-gray-700">
+              <Link href={`/`} className="text-gray-medium">
                 Shorten another URL<span> &rarr;</span>
               </Link>
             </div>

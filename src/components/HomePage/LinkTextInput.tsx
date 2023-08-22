@@ -12,6 +12,7 @@ import { NDKEvent } from "@nostr-dev-kit/ndk";
 import { nanoid } from "nanoid";
 import { useClipboard } from "@/hooks/useCopyClipboard";
 import { useUserLinksPost } from "@/hooks/useUserLinksPost";
+import removeHttp from "@/utils/removeHttp";
 
 export default function LinkTextInput({
   fireConfetti,
@@ -80,31 +81,36 @@ export default function LinkTextInput({
         <div className="relative flex flex-grow items-stretch focus-within:z-10">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             {signer ? (
-              <LinkIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+              <LinkIcon
+                className="h-6 w-6 text-gray-medium"
+                aria-hidden="true"
+              />
             ) : (
               <SignalIcon
-                className="h-5 w-5 text-gray-400"
+                className="h-6 w-6 text-gray-medium"
                 aria-hidden="true"
               />
             )}
           </div>
           {id ? (
             <div
-              className="h-12 w-full bg-transparent pl-11 pr-4 text-gray-900 items-center flex cursor-pointer"
+              className="h-12 w-full bg-transparent pl-11 pr-4 text-gray-dark items-center flex cursor-pointer"
               onClick={() => {
                 setCopied(true);
                 copyUrl();
               }}
             >
-              {siteURL}
-              {id}
+              {removeHttp(siteURL)}
+              <div className="font-bold text-gray-dark whitespace-nowrap">
+                {id}
+              </div>
             </div>
           ) : (
             <input
               type="url"
               name="url"
               id="url_input"
-              className="block w-full bg-transparent rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 border-transparent focus:border-transparent focus:ring-0"
+              className="block w-full bg-transparent rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-dark placeholder:text-gray-medium sm:text-sm sm:leading-6 border-transparent focus:border-transparent focus:ring-0"
               placeholder={
                 signer
                   ? "enter url you want to shorten"
@@ -124,12 +130,14 @@ export default function LinkTextInput({
         {!success && (
           <button
             type="button"
-            className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:bg-opacity-80 disabled:text-gray-400"
+            className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm text-gray-dark hover:bg-gray-light hover:bg-opacity-80 disabled:text-gray-light"
             onClick={shortenUrl}
             disabled={!signer || publishing || input.length === 0}
           >
             {publishing ? (
-              <ArrowPathIcon className={`w-8 h-8 animate-spin text-gray-400`} />
+              <ArrowPathIcon
+                className={`w-8 h-8 animate-spin text-gray-medium`}
+              />
             ) : (
               <kbd className="">Enter</kbd>
             )}
@@ -141,7 +149,7 @@ export default function LinkTextInput({
         <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5 items-center z-50">
           <>
             {copied ? (
-              <CheckIcon className="h-8 w-8 text-green-400" />
+              <CheckIcon className="h-8 w-8 text-primary" />
             ) : (
               <button
                 onClick={() => {
@@ -149,7 +157,7 @@ export default function LinkTextInput({
                   copyUrl();
                 }}
               >
-                <DocumentDuplicateIcon className="h-8 w-8 text-gray-400" />
+                <DocumentDuplicateIcon className="h-8 w-8 text-gray-medium" />
               </button>
             )}
           </>

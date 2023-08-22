@@ -39,8 +39,8 @@ export default function Header() {
             onClick={() => !isUserSignIn && login()}
             className={`bg-white/60 p-1 rounded-md ${
               isUserSignIn
-                ? "text-green-600 cursor-help"
-                : "text-gray-700 hover:text-gray-600"
+                ? "bg-primary cursor-help text-gray-light"
+                : "text-gray-700 hover:text-gray-medium"
             }`}
             disabled={!ndk}
           >
@@ -53,7 +53,7 @@ export default function Header() {
             title={item.name}
             key={item.name}
             href={item.href}
-            className="text-gray-700 hover:text-gray-600 bg-white/60 p-1 rounded-md"
+            className="text-gray-700 hover:text-gray-medium bg-white/60 p-1 rounded-md"
             target="_blank"
             rel="noopener noreferrer"
           >
