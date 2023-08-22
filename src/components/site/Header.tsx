@@ -39,7 +39,7 @@ export default function Header() {
             onClick={() => !isUserSignIn && login()}
             className={`bg-white/60 p-1 rounded-md ${
               isUserSignIn
-                ? "bg-primary cursor-help text-gray-light"
+                ? "bg-gray-dark cursor-help text-gray-light"
                 : "text-gray-700 hover:text-gray-medium"
             }`}
             disabled={!ndk}

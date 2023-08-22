@@ -93,7 +93,7 @@ export default function UserLinks({}) {
                   )}
                 </button>
               </div>
-              <div className="flex-1">
+              <div className="">
                 <Link
                   href={`${window.location.href}${url.id}`}
                   target="_blank"
