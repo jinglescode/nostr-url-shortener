@@ -1,7 +1,7 @@
 "use client";
 import { NDKProvider } from "@nostr-dev-kit/ndk-react";
-import LoadNdk from "@/components/LoadNdk";
 import { DEFAULT_RELAYS } from "@/constants/relays";
+import LoadNdk from "./LoadNdk";
 
 export default function NDKWrapper({
   children,

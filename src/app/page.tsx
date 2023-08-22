@@ -1,5 +1,5 @@
-import NDKWrapper from "@/components/NDKWrapper";
 import HomePage from "@/components/HomePage";
+import NDKWrapper from "@/components/ndk/NDKWrapper";
 import { getSupportedImageFormat } from "@/utils/getSupportedImageFormat";
 import { getURL } from "@/utils/getURL";
 

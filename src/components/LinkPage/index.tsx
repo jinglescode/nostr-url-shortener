@@ -3,16 +3,18 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NDKFilter } from "@nostr-dev-kit/ndk";
 import { useRouter } from "next/navigation";
-import Layout from "./Layout";
 import Link from "next/link";
 import { getSupportedImageFormatClientSide } from "@/utils/getSupportedImageFormatClientSide";
+import Layout from "../site/Layout";
 
 export default function LinkPage() {
   const { ndk } = useNDK();
   const params = useParams();
   const { push } = useRouter();
   const [notFound, setNotFound] = useState<boolean>(false);
-  const [imageFormat, setImageFormat] = useState<'avif' | 'webp' | 'jpeg'>('jpeg'); // default to 'jpeg'
+  const [imageFormat, setImageFormat] = useState<"avif" | "webp" | "jpeg">(
+    "jpeg"
+  ); // default to 'jpeg'
 
   useEffect(() => {
     async function fetchData() {
@@ -51,12 +53,6 @@ export default function LinkPage() {
     return (
       <Layout imageFormat={imageFormat}>
         <div className="flex-1 flex flex-col justify-center items-center mx-auto max-w-2xl w-full gap-2">
-          {/* <AtSymbolIcon className="h-24 w-24 text-white" /> */}
-
-          {/* <h2 className="text-3xl font-mono font-bold tracking-tight text-white sm:text-4xl font-outline">
-            URL Shortener
-          </h2> */}
-
           <div className="w-full rounded-xl bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl">
             <div className="h-20 w-full bg-transparent pl-4 pr-4 text-gray-900 items-center flex flex-col justify-center">
               <span>This URL does not exist.</span>

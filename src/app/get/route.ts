@@ -12,7 +12,6 @@ import { DEFAULT_RELAYS } from "@/constants/relays";
 
 export async function GET(req: NextRequest) {
   const url = req.nextUrl.searchParams.get("url");
-  const id = req.nextUrl.searchParams.get("id");
 
   const relays =
     process.env.NEXT_PUBLIC_RELAY_URLS?.split(",") || DEFAULT_RELAYS;
@@ -67,24 +66,6 @@ export async function GET(req: NextRequest) {
       url: `${req.headers.get("host")}/${_id}`,
       eid: event.id,
     });
-  }
-
-  if (id) {
-    let event = await pool.get(relays, {
-      kinds: [1994],
-      "#d": [id],
-    });
-    if (event) {
-      const dTags = event.tags.filter((t) => t[0] === "d");
-      const rTags = event.tags.filter((t) => t[0] === "r");
-      if (rTags.length > 0) {
-        return NextResponse.json({
-          id: dTags[0][1],
-          url: rTags[0][1],
-          eid: event.id,
-        });
-      }
-    }
   }
 
   return NextResponse.json(
