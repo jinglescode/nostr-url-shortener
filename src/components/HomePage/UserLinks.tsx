@@ -19,6 +19,9 @@ export default function UserLinks({}) {
   const isUserSignIn = sessionStore((state) => state.isUserSignIn);
   const [userPk, setUserPk] = useState<string | undefined>(undefined);
 
+  const [deletingEvent, setDeletingEvent] = useState<string>("");
+  const [deletedEvents, setDeletedEvents] = useState<string[]>([]);
+
   const { signer } = useNDK();
   const { data } = useUserLinks(userPk);
 
@@ -34,16 +37,21 @@ export default function UserLinks({}) {
   }, [isUserSignIn, signer]);
 
   function deleteLink(eventId: string) {
-    const event = new NDKEvent();
-    event.kind = 5;
-    event.tags = [["e", eventId]];
-
-    mutate(event);
+    if (eventId) {
+      const event = new NDKEvent();
+      event.kind = 5;
+      event.tags = [["e", eventId]];
+      setDeletingEvent(eventId);
+      mutate(event);
+    }
   }
 
-  // useEffect(() => {
-  //   console.log(isSuccess);
-  // }, [isSuccess, isError]);
+  useEffect(() => {
+    if (isSuccess) {
+      setDeletedEvents([...deletedEvents, deletingEvent]);
+      setDeletingEvent("");
+    }
+  }, [isSuccess, isError]);
 
   if (data === undefined) return <></>;
 
@@ -51,32 +59,37 @@ export default function UserLinks({}) {
     <div className="rounded-md bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl overflow-y-scroll max-h-96 w-full">
       <table className="min-w-full divide-y divide-gray-300 h-12 table-auto overflow-y-scroll">
         <tbody>
-          {data.map((url, i) => (
-            <tr
-              key={url.id}
-              className={classNames(
-                i === 0 ? "" : "border-t border-gray-200",
-                "text-gray-600 text-sm"
-              )}
-            >
-              <td className="flex p-4">
-                <span className="text-gray-600">{window.location.href}</span>
-                <Link href={`${window.location.href}${url.id}`} target="_blank">
-                  <div className="font-medium text-gray-900">{url.id}</div>
-                </Link>
-              </td>
-              <td className="p-4">
-                <Link href={`${url.url}`} target="_blank">
-                  <p className="max-w-xs truncate">{url.url}</p>
-                </Link>
-              </td>
-              <td className="p-4">
-                <button onClick={() => deleteLink(url.eid)}>
-                  <TrashIcon className="h-5 w-5 text-red-400" />
-                </button>
-              </td>
-            </tr>
-          ))}
+          {data
+            .filter((url) => !deletedEvents.includes(url.eid))
+            .map((url, i) => (
+              <tr
+                key={url.id}
+                className={classNames(
+                  i === 0 ? "" : "border-t border-gray-200",
+                  "text-gray-600 text-sm"
+                )}
+              >
+                <td className="flex p-4">
+                  <span className="text-gray-600">{window.location.href}</span>
+                  <Link
+                    href={`${window.location.href}${url.id}`}
+                    target="_blank"
+                  >
+                    <div className="font-medium text-gray-900">{url.id}</div>
+                  </Link>
+                </td>
+                <td className="p-4">
+                  <Link href={`${url.url}`} target="_blank">
+                    <p className="max-w-xs truncate">{url.url}</p>
+                  </Link>
+                </td>
+                <td className="p-4">
+                  <button onClick={() => deleteLink(url.eid)}>
+                    <TrashIcon className="h-5 w-5 text-red-400" />
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
