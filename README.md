@@ -57,7 +57,7 @@ For example: [https://w3.do/check?url=https://github.com/jinglescode/nostr-url-s
 GET https://w3.do/check?id=<id>
 ```
 
-For example: [https://w3.do/get?id=MSbbaU8l](https://w3.do/get?id=MSbbaU8l)
+For example: [https://w3.do/check?id=MSbbaU8l](https://w3.do/check?id=MSbbaU8l)
 
 ## Support this project
 
