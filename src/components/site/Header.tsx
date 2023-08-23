@@ -31,11 +31,6 @@ export default function Header() {
       <div className="flex space-x-2 justify-center">
         {hasExtension && (
           <button
-            title={
-              isUserSignIn
-                ? `You are connected ${userNpub}`
-                : "Login with Extension"
-            }
             onClick={() => !isUserSignIn && login()}
             className={`p-1 rounded-md ${
               isUserSignIn
@@ -50,7 +45,6 @@ export default function Header() {
 
         {headerLinks.map((item) => (
           <a
-            title={item.name}
             key={item.name}
             href={item.href}
             className="text-gray-700 hover:text-gray-medium bg-white/60 p-1 rounded-md"

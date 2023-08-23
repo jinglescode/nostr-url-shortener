@@ -68,7 +68,7 @@ export default function UserLinks({}) {
 
   return (
     <div className="rounded-md bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl max-h-96 w-full">
-      <div className="divide-y divide-gray-light max-h-96 overflow-y-scroll w-full">
+      <div className="divide-y divide-gray-light max-h-96 overflow-y-auto">
         {data
           .filter((url) => !deletedEvents.includes(url.eid))
           .map((url, i) => (

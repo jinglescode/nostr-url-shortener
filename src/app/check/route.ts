@@ -1,22 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { SimplePool } from "nostr-tools";
 import { DEFAULT_RELAYS } from "@/constants/relays";
+import NDK, { NDKFilter } from "@nostr-dev-kit/ndk";
 
 export async function GET(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
   const url = req.nextUrl.searchParams.get("url");
+  const pubkey = req.nextUrl.searchParams.get("pubkey");
 
   const relays =
     process.env.NEXT_PUBLIC_RELAY_URLS?.split(",") || DEFAULT_RELAYS;
 
-  const pool = new SimplePool();
+  const ndk = new NDK({
+    explicitRelayUrls: relays,
+  });
+  await ndk.connect();
 
   if (id) {
-    let event = await pool.get(relays, {
+    const filter: NDKFilter = {
+      //@ts-ignore
       kinds: [1994],
       "#d": [id],
-    });
+    };
+
+    const event = await ndk.fetchEvent(filter);
+
     if (event) {
       const dTags = event.tags.filter((t) => t[0] === "d");
       const rTags = event.tags.filter((t) => t[0] === "r");
@@ -31,10 +39,13 @@ export async function GET(req: NextRequest) {
   }
 
   if (url) {
-    let event = await pool.get(relays, {
+    const filter: NDKFilter = {
+      //@ts-ignore
       kinds: [1994],
       "#r": [url],
-    });
+    };
+    const event = await ndk.fetchEvent(filter);
+
     if (event) {
       const dTags = event.tags.filter((t) => t[0] === "d");
       const rTags = event.tags.filter((t) => t[0] === "r");
@@ -48,13 +59,37 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  if (pubkey) {
+    const filter: NDKFilter = {
+      //@ts-ignore
+      kinds: [1994],
+      authors: [pubkey],
+    };
+    let events = await ndk.fetchEvents(filter);
+    events = Array.from(new Set(events.values()));
+
+    const allUrls = events.map((event) => {
+      const dTags = event.tags.filter((t) => t[0] === "d");
+      const rTags = event.tags.filter((t) => t[0] === "r");
+      return {
+        id: dTags[0][1],
+        url: rTags[0][1],
+        eid: event.id,
+      };
+    });
+
+    return NextResponse.json(allUrls);
+  }
+
   return NextResponse.json(
     {
       error: `Usage: ${req.headers.get(
         "host"
       )}/check?url=<full url here> or ${req.headers.get(
         "host"
-      )}/check?id=<id here>`,
+      )}/check?id=<id here> or ${req.headers.get(
+        "host"
+      )}/check?pubkey=<pubkey here>`,
     },
     {
       status: 400,

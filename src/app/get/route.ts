@@ -2,13 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { nanoid } from "nanoid";
 
-import {
-  getPublicKey,
-  getEventHash,
-  getSignature,
-  SimplePool,
-} from "nostr-tools";
 import { DEFAULT_RELAYS } from "@/constants/relays";
+import NDK, { NDKPrivateKeySigner, NDKEvent } from "@nostr-dev-kit/ndk";
 
 export async function GET(req: NextRequest) {
   const url = req.nextUrl.searchParams.get("url");
@@ -16,10 +11,16 @@ export async function GET(req: NextRequest) {
   const relays =
     process.env.NEXT_PUBLIC_RELAY_URLS?.split(",") || DEFAULT_RELAYS;
 
-  const pool = new SimplePool();
-
   if (url) {
     const sk = process.env.NEXT_PUBLIC_SK;
+
+    const signer = new NDKPrivateKeySigner(sk);
+
+    const ndk = new NDK({
+      explicitRelayUrls: relays,
+      signer: signer,
+    });
+    await ndk.connect();
 
     if (sk === undefined) {
       return NextResponse.json(
@@ -30,41 +31,25 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    let pk = getPublicKey(sk);
-
     const _id = nanoid(8);
 
-    let event = {
-      pubkey: pk,
-      kind: 1994,
-      created_at: Math.floor(Date.now() / 1000),
-      tags: [
-        ["d", _id],
-        ["r", url],
-      ],
-      content: "",
-      id: "",
-      sig: "",
-    };
+    const event = new NDKEvent();
+    event.tags = [
+      ["d", _id],
+      ["r", url],
+    ];
+    event.content = url;
+    event.kind = 1994;
+    event.ndk = ndk;
+    event.sign();
+    await event.publish();
 
-    event.id = getEventHash(event);
-    event.sig = getSignature(event, sk);
-
-    try {
-      await Promise.all(pool.publish(relays, event));
-    } catch (error) {
-      return NextResponse.json(
-        { error: "Failed to publish to at least one relay in the pool" },
-        {
-          status: 400,
-        }
-      );
-    }
+    const publishedEvent = event.rawEvent();
 
     return NextResponse.json({
       id: _id,
       url: `${req.headers.get("host")}/${_id}`,
-      eid: event.id,
+      eid: publishedEvent.id,
     });
   }
 
