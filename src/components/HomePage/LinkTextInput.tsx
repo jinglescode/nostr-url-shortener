@@ -130,7 +130,7 @@ export default function LinkTextInput({
         {!success && (
           <button
             type="button"
-            className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm text-gray-dark hover:bg-gray-light hover:bg-opacity-80 disabled:text-gray-light"
+            className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm text-gray-dark hover:bg-gray-light hover:bg-opacity-80 disabled:hidden"
             onClick={shortenUrl}
             disabled={!signer || publishing || input.length === 0}
           >
@@ -139,7 +139,7 @@ export default function LinkTextInput({
                 className={`w-8 h-8 animate-spin text-gray-medium`}
               />
             ) : (
-              <kbd className="">Enter</kbd>
+              <kbd>Enter</kbd>
             )}
           </button>
         )}

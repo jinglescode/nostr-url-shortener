@@ -37,10 +37,10 @@ export default function Header() {
                 : "Login with Extension"
             }
             onClick={() => !isUserSignIn && login()}
-            className={`bg-white/60 p-1 rounded-md ${
+            className={`p-1 rounded-md ${
               isUserSignIn
                 ? "bg-gray-dark cursor-help text-gray-light"
-                : "text-gray-700 hover:text-gray-medium"
+                : "text-gray-700 hover:text-gray-medium bg-white/60"
             }`}
             disabled={!ndk}
           >
