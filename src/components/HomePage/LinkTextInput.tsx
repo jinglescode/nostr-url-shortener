@@ -188,7 +188,7 @@ export default function LinkTextInput({
             )}
           </div>
 
-          {!showCustomSlug && !success && (
+          {(publishing || !showCustomSlug) && !success && (
             <button
               type="button"
               className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm text-gray-dark disabled:hidden"
@@ -241,7 +241,7 @@ export default function LinkTextInput({
         )}
       </div>
 
-      {showCustomSlug && !success && (
+      {!publishing && showCustomSlug && !success && (
         <>
           <ArrowDownIcon className="h-6 w-6 text-gray-light" />
 
