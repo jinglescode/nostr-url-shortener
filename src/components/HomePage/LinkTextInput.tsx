@@ -169,7 +169,7 @@ export default function LinkTextInput({
               <input
                 type="url"
                 name="url"
-                id="url_input"
+                id="input_url"
                 className="block w-full bg-transparent rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-dark border-transparent focus:border-transparent focus:ring-0"
                 placeholder={
                   signer
@@ -251,8 +251,9 @@ export default function LinkTextInput({
                 {displayWithuserNip05}
               </span>
               <input
-                type="text"
+                type="url"
                 name="slug"
+                id="input_slug"
                 className="block bg-transparent border-0 focus:ring-0 w-full"
                 placeholder="url slug"
                 onChange={(e) => setCustomSlug(e.target.value)}
