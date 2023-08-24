@@ -15,7 +15,7 @@ export default function LinkPage() {
   const [notFound, setNotFound] = useState<boolean>(false);
   const [imageFormat, setImageFormat] = useState<"avif" | "webp" | "jpeg">(
     "jpeg"
-  ); // default to 'jpeg'
+  );
 
   useEffect(() => {
     async function fetchData() {
@@ -27,17 +27,17 @@ export default function LinkPage() {
       };
 
       if (params.slug2) {
-        const user = await NDKUser.fromNip05(params.slug);
-        if (user) {
-          const npub = user.npub;
-          const pk = getPublicKeys(npub).pk;
+        // const user = await NDKUser.fromNip05(params.slug);
+        // if (user) {
+          // const npub = user.npub;
+          // const pk = getPublicKeys(npub).pk;
 
           filter = {
             kinds: [1994],
-            authors: [pk],
+            // authors: [pk],
             "#d": [`${params.slug}/${params.slug2}`],
           };
-        }
+        // }
       }
 
       const event = await ndk.fetchEvent(filter);

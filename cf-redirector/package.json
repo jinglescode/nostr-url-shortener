@@ -9,7 +9,8 @@
   "private": true,
   "scripts": {
     "start": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev --remote"
   },
   "dependencies": {
     "nostr-tools": "^1.14.0"

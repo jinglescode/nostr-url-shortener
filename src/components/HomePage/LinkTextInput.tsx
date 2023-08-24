@@ -17,6 +17,7 @@ import { useClipboard } from "@/hooks/useCopyClipboard";
 import { useUserLinksPost } from "@/hooks/useUserLinksPost";
 import removeHttp from "@/utils/removeHttp";
 import { sessionStore } from "../site/sessionStore";
+import { urlReplaceDots } from "@/utils/urlReplaceDots";
 
 export default function LinkTextInput({
   fireConfetti,
@@ -64,7 +65,9 @@ export default function LinkTextInput({
             nip05 = nip05.slice(2);
           }
           setUserNip05(nip05);
-          nip05 = removeHttp(window.location.href) + nip05 + "/";
+          nip05 = urlReplaceDots(
+            removeHttp(window.location.href) + nip05 + "/"
+          );
           setDisplayWithUserNip05(nip05);
         }
       }
@@ -88,6 +91,9 @@ export default function LinkTextInput({
     if (showCustomSlug) {
       id = `${userNip05}/${customSlug}`;
     }
+
+    id = urlReplaceDots(id);
+
     const event = new NDKEvent();
     event.kind = 1994;
     event.tags = [
@@ -242,7 +248,7 @@ export default function LinkTextInput({
 
           <div className="w-full rounded-md bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl">
             <div className="flex rounded-md shadow-sm h-12">
-              <span className="inline-flex items-center px-3 text-gray-medium sm:text-sm">
+              <span className="inline-flex items-center px-3 text-gray-medium sm:text-sm whitespace-nowrap">
                 {displayWithuserNip05}
               </span>
               <input
