@@ -1,4 +1,5 @@
 "use client";
+
 import { useUserLinks } from "@/hooks/useUserLinks";
 import { getPublicKeys } from "@/utils/getPublicKeys";
 import { useNDK } from "@nostr-dev-kit/ndk-react";
@@ -107,7 +108,7 @@ export default function UserLinks({}) {
                   </div>
                 </Link>
               </div>
-              <div className="flex-grow overflow-x-hidden truncate">
+              <div className="flex-grow overflow-x-hidden">
                 <Link
                   href={`${url.url}`}
                   target="_blank"

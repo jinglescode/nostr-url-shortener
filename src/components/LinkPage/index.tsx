@@ -1,11 +1,12 @@
 import { useNDK } from "@nostr-dev-kit/ndk-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NDKFilter } from "@nostr-dev-kit/ndk";
+import { NDKFilter, NDKUser } from "@nostr-dev-kit/ndk";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getSupportedImageFormatClientSide } from "@/utils/getSupportedImageFormatClientSide";
 import Layout from "../site/Layout";
+import { getPublicKeys } from "@/utils/getPublicKeys";
 
 export default function LinkPage() {
   const { ndk } = useNDK();
@@ -19,10 +20,25 @@ export default function LinkPage() {
   useEffect(() => {
     async function fetchData() {
       if (!ndk) return;
-      const filter: NDKFilter = {
+
+      let filter: NDKFilter = {
         kinds: [1994],
         "#d": [params.slug],
       };
+
+      if (params.slug2) {
+        const user = await NDKUser.fromNip05(params.slug);
+        if (user) {
+          const npub = user.npub;
+          const pk = getPublicKeys(npub).pk;
+
+          filter = {
+            kinds: [1994],
+            authors: [pk],
+            "#d": [`${params.slug}/${params.slug2}`],
+          };
+        }
+      }
 
       const event = await ndk.fetchEvent(filter);
 
