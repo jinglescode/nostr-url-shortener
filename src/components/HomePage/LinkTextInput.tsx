@@ -17,7 +17,7 @@ import { useClipboard } from "@/hooks/useCopyClipboard";
 import { useUserLinksPost } from "@/hooks/useUserLinksPost";
 import removeHttp from "@/utils/removeHttp";
 import { sessionStore } from "../site/sessionStore";
-import { urlReplaceDots } from "@/utils/urlReplaceDots";
+import { replaceDots } from "@/utils/replaceDots";
 
 export default function LinkTextInput({
   fireConfetti,
@@ -65,9 +65,8 @@ export default function LinkTextInput({
             nip05 = nip05.slice(2);
           }
           setUserNip05(nip05);
-          nip05 = urlReplaceDots(
-            removeHttp(window.location.href) + nip05 + "/"
-          );
+          nip05 =
+            removeHttp(window.location.href) + replaceDots(nip05) + "/";
           setDisplayWithUserNip05(nip05);
         }
       }
@@ -92,7 +91,7 @@ export default function LinkTextInput({
       id = `${userNip05}/${customSlug}`;
     }
 
-    id = urlReplaceDots(id);
+    id = replaceDots(id);
 
     const event = new NDKEvent();
     event.kind = 1994;
