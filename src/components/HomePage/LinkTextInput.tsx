@@ -18,6 +18,7 @@ import { useUserLinksPost } from "@/hooks/useUserLinksPost";
 import removeHttp from "@/utils/removeHttp";
 import { sessionStore } from "../site/sessionStore";
 import { replaceDots } from "@/utils/replaceDots";
+import Tooltip from "../site/Tooltip";
 
 export default function LinkTextInput({
   fireConfetti,
@@ -65,8 +66,7 @@ export default function LinkTextInput({
             nip05 = nip05.slice(2);
           }
           setUserNip05(nip05);
-          nip05 =
-            removeHttp(window.location.href) + replaceDots(nip05) + "/";
+          nip05 = removeHttp(window.location.href) + replaceDots(nip05) + "/";
           setDisplayWithUserNip05(nip05);
         }
       }
@@ -200,7 +200,9 @@ export default function LinkTextInput({
                   className={`w-8 h-8 animate-spin text-gray-medium`}
                 />
               ) : (
-                <RocketLaunchIcon className="h-6 w-6 text-gray-medium hover:text-gray-dark" />
+                <Tooltip info="Create short link">
+                  <RocketLaunchIcon className="h-6 w-6 text-gray-medium hover:text-gray-dark" />
+                </Tooltip>
               )}
             </button>
           )}
@@ -212,11 +214,13 @@ export default function LinkTextInput({
               onClick={() => setShowCustomSlug(!showCustomSlug)}
               disabled={!signer || publishing}
             >
-              <AdjustmentsVerticalIcon
-                className={`h-6 w-6 hover:text-gray-dark ${
-                  showCustomSlug ? "text-primary" : "text-gray-medium"
-                }`}
-              />
+              <Tooltip info="Custom link">
+                <AdjustmentsVerticalIcon
+                  className={`h-6 w-6 hover:text-gray-dark ${
+                    showCustomSlug ? "text-primary" : "text-gray-medium"
+                  }`}
+                />
+              </Tooltip>
             </button>
           )}
         </div>
@@ -255,7 +259,7 @@ export default function LinkTextInput({
                 name="slug"
                 id="input_slug"
                 className="block bg-transparent border-0 focus:ring-0 w-full"
-                placeholder="url slug"
+                placeholder="your custom link"
                 onChange={(e) => setCustomSlug(e.target.value)}
                 value={customSlug}
                 onKeyUp={(e) => e.key === "Enter" && shortenUrl()}
@@ -276,7 +280,9 @@ export default function LinkTextInput({
                       className={`w-8 h-8 animate-spin text-gray-medium`}
                     />
                   ) : (
-                    <RocketLaunchIcon className="h-6 w-6 text-gray-medium hover:text-gray-dark" />
+                    <Tooltip info="Create short link">
+                      <RocketLaunchIcon className="h-6 w-6 text-gray-medium hover:text-gray-dark" />
+                    </Tooltip>
                   )}
                 </button>
               )}

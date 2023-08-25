@@ -49,7 +49,7 @@ This will return a JSON response, for example:
 GET https://w3.do/check?url=<url>
 ```
 
-For example: [https://w3.do/check?url=https://github.com/jinglescode/nostr-url-shortener](https://w3.do/check?url=https://github.com/jinglescode/nostr-url-shortener)
+Example: [https://w3.do/check?url=https://github.com/jinglescode/nostr-url-shortener](https://w3.do/check?url=https://github.com/jinglescode/nostr-url-shortener)
 
 ### Check using ID
 
@@ -57,7 +57,15 @@ For example: [https://w3.do/check?url=https://github.com/jinglescode/nostr-url-s
 GET https://w3.do/check?id=<id>
 ```
 
-For example: [https://w3.do/check?id=MSbbaU8l](https://w3.do/check?id=MSbbaU8l)
+Example: [https://w3.do/check?id=MSbbaU8l](https://w3.do/check?id=MSbbaU8l)
+
+### Get all links by pubkey
+
+```
+GET https://w3.do/check?pubkey=<pubkey hex>
+```
+
+Example: [https://w3.do/check?pubkey=efc37e97fa4fad679e464b7a6184009b7cc7605aceb0c5f56b464d2b986a60f0](https://w3.do/check?pubkey=efc37e97fa4fad679e464b7a6184009b7cc7605aceb0c5f56b464d2b986a60f0)
 
 ## Support this project
 
@@ -69,7 +77,6 @@ For example: [https://w3.do/check?id=MSbbaU8l](https://w3.do/check?id=MSbbaU8l)
 
 ## Potential features
 
-- to create links with user's NIP05 and user assigned slug
 - support to handle nostr slugs, like nevent, npub, note, nprofile
 - something about njump? https://github.com/fiatjaf/njump
 - use bech32 too, use nip89 to store user preferred client

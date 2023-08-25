@@ -1,10 +1,10 @@
-import { BACKGROUND_IMAGES } from "@/constants/backgroundImages";
+// import { BACKGROUND_IMAGES } from "@/constants/backgroundImages";
 import Footer from "./Footer";
 import Header from "./Header";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 export default function Layout({ children, imageFormat }: { children: React.ReactNode, imageFormat: 'avif' | 'webp' | 'jpeg' }) {
-  const [selectedImage, setSelectedImage] = useState<string>("");
+  // const [selectedImage, setSelectedImage] = useState<string>("");
 
   // useEffect(() => {
   //   const _selectedImage =
@@ -14,8 +14,8 @@ export default function Layout({ children, imageFormat }: { children: React.Reac
 
   return (
     <main
-      className={`w-full bg-cover bg-center overflow-hidden`}
-      style={{ backgroundImage: `url(${selectedImage})` }}
+      className={`w-full bg-cover bg-center overflow-hidden overflow-y-clip`}
+      // style={{ backgroundImage: `url(${selectedImage})` }}
     >
       <div className="w-full h-screen flex flex-col">
         <div className="h-14">

@@ -18,7 +18,7 @@ export const headerLinks = [
     ),
   },
   {
-    name: "Source code on GitHub",
+    name: "GitHub",
     href: "https://github.com/jinglescode/nostr-url-shortener",
     icon: (props) => (
       <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
