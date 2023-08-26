@@ -4,10 +4,12 @@ import {
   ArrowDownIcon,
   ArrowPathIcon,
   CheckIcon,
+  ClipboardDocumentIcon,
   DocumentDuplicateIcon,
   LinkIcon,
   RocketLaunchIcon,
   SignalIcon,
+  XMarkIcon,
 } from "@heroicons/react/20/solid";
 import { useNDK } from "@nostr-dev-kit/ndk-react";
 import { useEffect, useRef, useState } from "react";
@@ -47,6 +49,8 @@ export default function LinkTextInput({
   >(undefined);
   const [showCustomSlug, setShowCustomSlug] = useState<boolean>(false);
   const [customSlug, setCustomSlug] = useState<string>("");
+  const [showCancelCustomSlug, setShowCancelCustomSlug] =
+    useState<boolean>(false);
 
   const isUserSignIn = sessionStore((state) => state.isUserSignIn);
 
@@ -115,6 +119,11 @@ export default function LinkTextInput({
     setCustomSlug("");
     setShowCustomSlug(false);
     resetMutation();
+  }
+
+  async function paste() {
+    const text = await navigator.clipboard.readText();
+    setInput(text);
   }
 
   useEffect(() => {
@@ -188,6 +197,18 @@ export default function LinkTextInput({
             )}
           </div>
 
+          {input.length == 0 && (
+            <button
+              type="button"
+              className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm text-gray-dark disabled:hidden"
+              onClick={paste}
+            >
+              <Tooltip info="Paste from clipboard">
+                <ClipboardDocumentIcon className="h-6 w-6 text-gray-medium hover:text-gray-dark" />
+              </Tooltip>
+            </button>
+          )}
+
           {(publishing || !showCustomSlug) && !success && (
             <button
               type="button"
@@ -207,7 +228,7 @@ export default function LinkTextInput({
             </button>
           )}
 
-          {userNip05 && !success && (
+          {/* {userNip05 && !success && (
             <button
               type="button"
               className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm text-gray-dark disabled:hidden"
@@ -222,7 +243,7 @@ export default function LinkTextInput({
                 />
               </Tooltip>
             </button>
-          )}
+          )} */}
         </div>
 
         {success && (
@@ -247,18 +268,28 @@ export default function LinkTextInput({
 
       {!publishing && showCustomSlug && !success && (
         <>
-          <ArrowDownIcon className="h-6 w-6 text-gray-light" />
+          <button
+            onMouseOver={() => setShowCancelCustomSlug(true)}
+            onMouseOut={() => setShowCancelCustomSlug(false)}
+            onClick={() => setShowCustomSlug(!showCustomSlug)}
+          >
+            {showCancelCustomSlug ? (
+              <XMarkIcon className="h-6 w-6 text-red-400" />
+            ) : (
+              <ArrowDownIcon className="h-6 w-6 text-gray-dark" />
+            )}
+          </button>
 
           <div className="w-full rounded-md bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl">
             <div className="flex rounded-md shadow-sm h-12">
-              <span className="inline-flex items-center px-3 text-gray-medium sm:text-sm whitespace-nowrap">
+              <span className="inline-flex items-center pl-3 text-gray-medium sm:text-sm whitespace-nowrap">
                 {displayWithuserNip05}
               </span>
               <input
                 type="url"
                 name="slug"
                 id="input_slug"
-                className="block bg-transparent border-0 focus:ring-0 w-full"
+                className="block bg-transparent border-0 focus:ring-0 w-full pl-0"
                 placeholder="your custom link"
                 onChange={(e) => setCustomSlug(e.target.value)}
                 value={customSlug}
@@ -291,8 +322,22 @@ export default function LinkTextInput({
         </>
       )}
 
+      {!showCustomSlug && userNip05 && !success && (
+        <button
+          type="button"
+          className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm text-gray-dark disabled:hidden"
+          onClick={() => {
+            setShowCustomSlug(!showCustomSlug);
+            setShowCancelCustomSlug(false);
+          }}
+          disabled={!signer || publishing}
+        >
+          Create custom link?
+        </button>
+      )}
+
       {success && (
-        <button className="text-gray-light" onClick={() => reset()}>
+        <button className="text-gray-dark" onClick={() => reset()}>
           create another link?
         </button>
       )}
