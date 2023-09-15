@@ -31,19 +31,17 @@ export default function Header() {
     <div className="bg-white/0 border-t border-white/0 flex items-center justify-end w-full p-4">
       <div className="flex space-x-2 justify-center">
         {hasExtension && (
-          <Tooltip info={isUserSignIn ? "Connected" : "Connect NIP7"}>
-            <button
-              onClick={() => !isUserSignIn && login()}
-              className={`p-1 rounded-md ${
-                isUserSignIn
-                  ? "bg-gray-dark text-gray-light"
-                  : "text-gray-700 hover:text-gray-medium bg-white/60"
-              }`}
-              disabled={!ndk}
-            >
-              <UserIcon className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </Tooltip>
+          <button
+            onClick={() => !isUserSignIn && login()}
+            className={`p-1 rounded-md ${
+              isUserSignIn
+                ? "bg-gray-dark text-gray-light"
+                : "text-gray-700 hover:text-gray-medium bg-white/60"
+            }`}
+            disabled={!ndk}
+          >
+            <UserIcon className="h-6 w-6" aria-hidden="true" />
+          </button>
         )}
 
         {headerLinks.map((item) => (
@@ -54,9 +52,7 @@ export default function Header() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Tooltip info={item.name}>
-              <item.icon className="h-6 w-6" aria-hidden="true" />
-            </Tooltip>
+            <item.icon className="h-6 w-6" aria-hidden="true" />
           </a>
         ))}
       </div>

@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import {
   AdjustmentsVerticalIcon,
   ArrowDownIcon,
@@ -20,7 +21,7 @@ import { useUserLinksPost } from "@/hooks/useUserLinksPost";
 import removeHttp from "@/utils/removeHttp";
 import { sessionStore } from "../site/sessionStore";
 import { replaceDots } from "@/utils/replaceDots";
-import Tooltip from "../site/Tooltip";
+import Imagelogo from "@/images/w3.svg";
 
 export default function LinkTextInput({
   fireConfetti,
@@ -148,11 +149,15 @@ export default function LinkTextInput({
       <div className="w-full rounded-md bg-white bg-opacity-80 shadow-2xl backdrop-blur backdrop-filter transition-all drop-shadow-xl">
         <div className="flex rounded-md shadow-sm h-12">
           <div className="relative flex flex-grow items-stretch focus-within:z-10">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-0">
               {signer ? (
-                <LinkIcon
-                  className="h-6 w-6 text-gray-medium"
-                  aria-hidden="true"
+                <Image
+                  src={Imagelogo}
+                  alt="logo"
+                  className="h-10 w-10"
+                  unoptimized
+                  width={32}
+                  height={32}
                 />
               ) : (
                 <SignalIcon
@@ -203,9 +208,7 @@ export default function LinkTextInput({
               className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm text-gray-dark disabled:hidden"
               onClick={paste}
             >
-              <Tooltip info="Paste from clipboard">
-                <ClipboardDocumentIcon className="h-6 w-6 text-gray-medium hover:text-gray-dark" />
-              </Tooltip>
+              <ClipboardDocumentIcon className="h-6 w-6 text-gray-medium hover:text-gray-dark" />
             </button>
           )}
 
@@ -221,9 +224,7 @@ export default function LinkTextInput({
                   className={`w-8 h-8 animate-spin text-gray-medium`}
                 />
               ) : (
-                <Tooltip info="Create short link">
-                  <RocketLaunchIcon className="h-6 w-6 text-gray-medium hover:text-gray-dark" />
-                </Tooltip>
+                <RocketLaunchIcon className="h-6 w-6 text-gray-medium hover:text-gray-dark" />
               )}
             </button>
           )}
@@ -235,13 +236,11 @@ export default function LinkTextInput({
               onClick={() => setShowCustomSlug(!showCustomSlug)}
               disabled={!signer || publishing}
             >
-              <Tooltip info="Custom link">
                 <AdjustmentsVerticalIcon
                   className={`h-6 w-6 hover:text-gray-dark ${
                     showCustomSlug ? "text-primary" : "text-gray-medium"
                   }`}
                 />
-              </Tooltip>
             </button>
           )} */}
         </div>
@@ -276,7 +275,7 @@ export default function LinkTextInput({
             {showCancelCustomSlug ? (
               <XMarkIcon className="h-6 w-6 text-red-400" />
             ) : (
-              <ArrowDownIcon className="h-6 w-6 text-gray-dark" />
+              <ArrowDownIcon className="h-6 w-6 text-white" />
             )}
           </button>
 
@@ -311,9 +310,7 @@ export default function LinkTextInput({
                       className={`w-8 h-8 animate-spin text-gray-medium`}
                     />
                   ) : (
-                    <Tooltip info="Create short link">
-                      <RocketLaunchIcon className="h-6 w-6 text-gray-medium hover:text-gray-dark" />
-                    </Tooltip>
+                    <RocketLaunchIcon className="h-6 w-6 text-gray-medium hover:text-gray-dark" />
                   )}
                 </button>
               )}
@@ -325,7 +322,7 @@ export default function LinkTextInput({
       {!showCustomSlug && userNip05 && !success && (
         <button
           type="button"
-          className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm text-gray-dark disabled:hidden"
+          className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 bg-transparent text-sm text-white disabled:hidden"
           onClick={() => {
             setShowCustomSlug(!showCustomSlug);
             setShowCancelCustomSlug(false);
