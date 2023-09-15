@@ -161,7 +161,7 @@ export default function LinkTextInput({
                 />
               ) : (
                 <SignalIcon
-                  className="h-6 w-6 text-gray-medium"
+                  className="h-6 w-6 text-gray-medium ml-3"
                   aria-hidden="true"
                 />
               )}
