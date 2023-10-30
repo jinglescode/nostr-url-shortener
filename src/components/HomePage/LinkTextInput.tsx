@@ -1,13 +1,12 @@
 "use client";
 import Image from "next/image";
 import {
-  AdjustmentsVerticalIcon,
   ArrowDownIcon,
   ArrowPathIcon,
   CheckIcon,
   ClipboardDocumentIcon,
   DocumentDuplicateIcon,
-  LinkIcon,
+  InformationCircleIcon,
   RocketLaunchIcon,
   SignalIcon,
   XMarkIcon,
@@ -22,6 +21,7 @@ import removeHttp from "@/utils/removeHttp";
 import { sessionStore } from "../site/sessionStore";
 import { replaceDots } from "@/utils/replaceDots";
 import Imagelogo from "@/images/w3.svg";
+import QrContainer from "../site/QrContainer";
 
 export default function LinkTextInput({
   fireConfetti,
@@ -52,6 +52,7 @@ export default function LinkTextInput({
   const [customSlug, setCustomSlug] = useState<string>("");
   const [showCancelCustomSlug, setShowCancelCustomSlug] =
     useState<boolean>(false);
+  const [showInfo, setShowInfo] = useState<boolean>(false);
 
   const isUserSignIn = sessionStore((state) => state.isUserSignIn);
 
@@ -248,6 +249,13 @@ export default function LinkTextInput({
         {success && (
           <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5 items-center z-50">
             <>
+              <button
+                onClick={() => {
+                  setShowInfo(true);
+                }}
+              >
+                <InformationCircleIcon className="h-8 w-8 text-gray-medium" />
+              </button>
               {copied ? (
                 <CheckIcon className="h-8 w-8 text-primary" />
               ) : (
@@ -338,6 +346,8 @@ export default function LinkTextInput({
           create another link?
         </button>
       )}
+
+      <QrContainer show={showInfo} setShow={setShowInfo} url={id} />
     </div>
   );
 }
