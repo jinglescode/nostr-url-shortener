@@ -3,6 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { DEFAULT_RELAYS } from "@/constants/relays";
 import NDK, { NDKFilter } from "@nostr-dev-kit/ndk";
 
+const getCorsHeaders = () => {
+  const headers = {
+    "Access-Control-Allow-Methods": `GET`,
+    "Access-Control-Allow-Origin": `*`,
+  };
+  return headers;
+};
+
 export async function GET(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
   const url = req.nextUrl.searchParams.get("url");
@@ -78,7 +86,10 @@ export async function GET(req: NextRequest) {
       };
     });
 
-    return NextResponse.json(allUrls);
+    return NextResponse.json(allUrls, {
+      status: 200,
+      headers: getCorsHeaders(),
+    });
   }
 
   return NextResponse.json(
@@ -93,6 +104,7 @@ export async function GET(req: NextRequest) {
     },
     {
       status: 400,
+      headers: getCorsHeaders(),
     }
   );
 }

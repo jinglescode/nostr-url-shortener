@@ -5,6 +5,14 @@ import { nanoid } from "nanoid";
 import { DEFAULT_RELAYS } from "@/constants/relays";
 import NDK, { NDKPrivateKeySigner, NDKEvent } from "@nostr-dev-kit/ndk";
 
+const getCorsHeaders = () => {
+  const headers = {
+    "Access-Control-Allow-Methods": `GET`,
+    "Access-Control-Allow-Origin": `*`,
+  };
+  return headers;
+};
+
 export async function GET(req: NextRequest) {
   const url = req.nextUrl.searchParams.get("url");
 
@@ -46,17 +54,24 @@ export async function GET(req: NextRequest) {
 
     const publishedEvent = event.rawEvent();
 
-    return NextResponse.json({
-      id: _id,
-      url: `${req.headers.get("host")}/${_id}`,
-      eid: publishedEvent.id,
-    });
+    return NextResponse.json(
+      {
+        id: _id,
+        url: `${req.headers.get("host")}/${_id}`,
+        eid: publishedEvent.id,
+      },
+      {
+        status: 200,
+        headers: getCorsHeaders(),
+      }
+    );
   }
 
   return NextResponse.json(
     { error: `Usage: ${req.headers.get("host")}/get?url=<full url here>` },
     {
       status: 400,
+      headers: getCorsHeaders(),
     }
   );
 }
