@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 
 import { DEFAULT_RELAYS } from "@/constants/relays";
 import NDK, { NDKPrivateKeySigner, NDKEvent } from "@nostr-dev-kit/ndk";
+import { checkUrlWebRiskSafe } from "@/utils/checkUrlWebRiskSafe";
 
 const getCorsHeaders = () => {
   const headers = {
@@ -20,6 +21,16 @@ export async function GET(req: NextRequest) {
     process.env.NEXT_PUBLIC_RELAY_URLS?.split(",") || DEFAULT_RELAYS;
 
   if (url) {
+    const urlIsSafe = await checkUrlWebRiskSafe(url);
+    if (urlIsSafe === false) {
+      return NextResponse.json(
+        { error: "Unsafe URL" },
+        {
+          status: 400,
+        }
+      );
+    }
+
     const sk = process.env.NEXT_PUBLIC_SK;
 
     const signer = new NDKPrivateKeySigner(sk);

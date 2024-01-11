@@ -22,6 +22,7 @@ import { sessionStore } from "../site/sessionStore";
 import { replaceDots } from "@/utils/replaceDots";
 import Imagelogo from "@/images/w3.svg";
 import QrContainer from "../site/QrContainer";
+import { checkUrlWebRiskSafe } from "@/utils/checkUrlWebRiskSafe";
 
 export default function LinkTextInput({
   fireConfetti,
@@ -82,14 +83,21 @@ export default function LinkTextInput({
 
   async function shortenUrl() {
     if (!signer || publishing || input.length === 0) return;
-    setSuccess(false);
-    setPublishing(true);
 
     // clean up inputs
     let url = input.trim();
     if (!/^https?:\/\//i.test(url)) {
       url = "https://" + url;
     }
+
+    // check if url is safe
+    const urlIsSafe = await checkUrlWebRiskSafe(url);
+    if (urlIsSafe === false) {
+      return;
+    }
+
+    setSuccess(false);
+    setPublishing(true);
 
     // create event
     let id = nanoid(8);
