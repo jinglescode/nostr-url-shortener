@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { DEFAULT_RELAYS } from "@/constants/relays";
 import NDK, { NDKPrivateKeySigner, NDKEvent } from "@nostr-dev-kit/ndk";
 import { checkUrlWebRiskSafe } from "@/utils/checkUrlWebRiskSafe";
+import { NOSTR_PREFIXES } from "@/constants/nostr-prefixes";
 
 const getCorsHeaders = () => {
   const headers = {
@@ -15,14 +16,24 @@ const getCorsHeaders = () => {
 };
 
 export async function GET(req: NextRequest) {
-  const url = req.nextUrl.searchParams.get("url");
+  let url = req.nextUrl.searchParams.get("url");
 
   const relays =
     process.env.NEXT_PUBLIC_RELAY_URLS?.split(",") || DEFAULT_RELAYS;
 
   if (url) {
+    url = url.trim();
+
+    const isNostr = NOSTR_PREFIXES.find((p) => url!.startsWith(p));
+
+    if (isNostr) {
+      url = `https://njump.me/${url}`;
+    } else if (!/^https?:\/\//i.test(url)) {
+      url = "https://" + url;
+    }
+
     const urlIsSafe = await checkUrlWebRiskSafe(url);
-    if (urlIsSafe === false) {
+    if (isNostr === undefined && urlIsSafe === false) {
       return NextResponse.json(
         { error: "Unsafe URL" },
         {

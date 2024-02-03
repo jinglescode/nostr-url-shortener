@@ -21,7 +21,15 @@ Why 1994?
 
 Because URLs (Uniform Resource Locators) were defined in 1994 by Tim Berners-Lee, the inventor of the World Wide Web. [[source: Wikipedia](https://en.wikipedia.org/wiki)]
 
-## API
+### NOSTR NIP-19 redirects njump.me
+
+Using a bech32 formatted string according to [NIP-19](https://github.com/nostr-protocol/nips/blob/master/19.md) as input will generate a shortened URL that redirects to [njump.me](https://njump.me).
+
+This includes: `nevent1`, `note1`, `npub1`, `nprofile1`, `naddr1`.
+
+For instance, when the input `npub1alpha9l6f7kk08jxfdaxrpqqnd7vwcz6e6cvtattgexjhxr2vrcqk86dsn` is provided, it generates a shortened URL, [w3.do/ig2FmnQY](https://w3.do/ig2FmnQY), which redirects to [njump.me/npub1alpha9l6f7kk08jxfdaxrpqqnd7vwcz6e6cvtattgexjhxr2vrcqk86dsn](https://njump.me/npub1alpha9l6f7kk08jxfdaxrpqqnd7vwcz6e6cvtattgexjhxr2vrcqk86dsn).
+
+## REST API
 
 ### Create a short URL
 

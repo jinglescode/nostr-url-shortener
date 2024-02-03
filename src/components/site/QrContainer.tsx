@@ -67,18 +67,20 @@ export default function QrContainer({
                 <div className="mt-3 text-center sm:mt-5">
                   <div className="mx-auto flex flex-col items-center justify-center">
                     <img src={qrCode} className="h-64 w-64" />
-                    <Link
-                      href={`${window.location.href}${url}`}
-                      target="_blank"
-                      className="flex hover:underline"
-                    >
-                      <span className="text-gray-medium">
-                        {removeHttp(window.location.href)}
-                      </span>
-                      <div className="font-bold text-gray-dark whitespace-nowrap">
-                        {url}
-                      </div>
-                    </Link>
+                    {url && (
+                      <Link
+                        href={`${window.location.href}${url}`}
+                        target="_blank"
+                        className="flex hover:underline"
+                      >
+                        <span className="text-gray-medium">
+                          {removeHttp(window.location.href)}
+                        </span>
+                        <div className="font-bold text-gray-dark whitespace-nowrap">
+                          {url}
+                        </div>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
