@@ -22,7 +22,7 @@ import { sessionStore } from "../site/sessionStore";
 import { replaceDots } from "@/utils/replaceDots";
 import Imagelogo from "@/images/w3.svg";
 import QrContainer from "../site/QrContainer";
-import { checkUrlWebRiskSafe } from "@/utils/checkUrlWebRiskSafe";
+// import { checkUrlWebRiskSafe } from "@/utils/checkUrlWebRiskSafe";
 import { NOSTR_PREFIXES } from "@/constants/nostr-prefixes";
 
 export default function LinkTextInput({
@@ -98,9 +98,9 @@ export default function LinkTextInput({
 
     // check if url is safe
     // const urlIsSafe = await checkUrlWebRiskSafe(url);
-    if (isNostr === undefined) { // && urlIsSafe === false
-      return;
-    }
+    // if (isNostr === undefined && urlIsSafe === false) {
+    //   return;
+    // }
 
     setSuccess(false);
     setPublishing(true);
