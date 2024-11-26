@@ -97,8 +97,8 @@ export default function LinkTextInput({
     }
 
     // check if url is safe
-    const urlIsSafe = await checkUrlWebRiskSafe(url);
-    if (isNostr === undefined && urlIsSafe === false) {
+    // const urlIsSafe = await checkUrlWebRiskSafe(url);
+    if (isNostr === undefined) { // && urlIsSafe === false
       return;
     }
 
