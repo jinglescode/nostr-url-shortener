@@ -2,9 +2,9 @@
   "name": "cf-redirector-w3do",
   "version": "0.0.0",
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230814.0",
-    "typescript": "^5.1.6",
-    "wrangler": "3.6.0"
+    "@cloudflare/workers-types": "^4.20250129.0",
+    "typescript": "^5.7.3",
+    "wrangler": "^3.107.2"
   },
   "private": true,
   "scripts": {
@@ -13,6 +13,6 @@
     "dev": "wrangler dev --remote"
   },
   "dependencies": {
-    "nostr-tools": "^1.14.0"
+    "nostr-tools": "^1.17.0"
   }
 }
